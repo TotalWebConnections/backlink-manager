@@ -17,24 +17,30 @@
 
 (enable-console-print!)
 
-(defonce dashboard-view-active (atom true))
-(defonce project-view-active   (atom false))
-(defonce links-view-active     (atom false))
+(defonce current-view (atom {
+  :dashboard-view-active true
+  :project-view-active false
+  :links-view-active false}))
+
+(defonce current-project (atom ""))
 
 (defonce projects (atom
   (js->clj (.parse js/JSON (.get storage "projects")) :keywordize-keys true)))
     ; (.get storage "projects")))
 
-(.log js/console projects)
+; (.log js/console @links-view-active)
 
 
 (defn root-component []
   [:div.mainWrapper
    (sidebar/render)
    [:div.bodyWrapper
-    (dashboard/render projects)
-    (project/render)
-    (links/render)]])
+    (if (:dashboard-view-active @current-view)
+      (dashboard/render projects current-view current-project))
+    (if (:project-view-active @current-view)
+      (project/render projects current-project))
+    (if (:links-view-active @current-view)
+      (links/render))]])
 
 (reagent/render
   [root-component]

@@ -11,20 +11,28 @@
 
 (defonce new-project (atom ""))
 
+(defn change-view [current-view title current-project]
+  (reset! current-view {
+    :dashboard-view-active false
+    :project-view-active true
+    :links-view-active false})
+  (reset! current-project title))
+
 (defn add-project [projects]
   ;~/Library/App
   (let [current-projects (into [] @projects)]
     ; (.log js/console (.stringify js/JSON (current-projects)))
-  ; (.set storage "test" (.stringify js/JSON (clj->js (assoc current-projects :title @new-project))))
   (.set storage "projects" (.stringify js/JSON (clj->js (conj current-projects {:title @new-project}))))
   (reset! projects @new-project)
   (reset! new-project "")))
 
-(defn render [projects]
+(defn render [projects current-view current-project]
   [:div.Dashboard
   [:p "Dashboard Text"]
   (for [item @projects]
-     ^{:key (:title item)} [:p (:title item)])
+     ^{:key (:title item)}
+      [:p  {:on-click #(change-view current-view (:title item) current-project)}
+           (:title item)])
   [:input {:type "text"
            :value @new-project
            :on-change #(reset! new-project (-> % .-target .-value))}]
