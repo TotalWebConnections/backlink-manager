@@ -22,8 +22,8 @@
 (defonce links-view-active     (atom false))
 
 (defonce projects (atom
-  (js->clj (.parse js/JSON (.get storage "test")))))
-    ; (.get storage "test")))
+  (js->clj (.parse js/JSON (.get storage "projects")) :keywordize-keys true)))
+    ; (.get storage "projects")))
 
 (.log js/console projects)
 

@@ -16,7 +16,7 @@
   (let [current-projects (into [] @projects)]
     ; (.log js/console (.stringify js/JSON (current-projects)))
   ; (.set storage "test" (.stringify js/JSON (clj->js (assoc current-projects :title @new-project))))
-  (.set storage "test" (.stringify js/JSON (clj->js (conj current-projects @new-project))))
+  (.set storage "projects" (.stringify js/JSON (clj->js (conj current-projects {:title @new-project}))))
   (reset! projects @new-project)
   (reset! new-project "")))
 
@@ -24,7 +24,7 @@
   [:div.Dashboard
   [:p "Dashboard Text"]
   (for [item @projects]
-     ^{:key item} [:p item])
+     ^{:key (:title item)} [:p (:title item)])
   [:input {:type "text"
            :value @new-project
            :on-change #(reset! new-project (-> % .-target .-value))}]
