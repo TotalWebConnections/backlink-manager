@@ -9,3 +9,11 @@ body, html {
 .Sidebar {
  width: 100px;
 }
+
+
+
+.project-wrapper, .links-wrapper, .page-wrapper {
+  border-bottom: 1px solid #444;
+  display: flex;
+  justify-content: space-between;
+}

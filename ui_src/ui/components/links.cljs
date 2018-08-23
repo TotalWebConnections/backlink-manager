@@ -19,8 +19,7 @@
   (let [current-links (.get storage @current-page)]
     (if (not= (count current-links) 0)
     (clj->js (into [] (.parse js/JSON current-links)))
-    [])
-  ))
+    [])))
 
 (defn go-back [current-view]
   "Goes back to the project view"
@@ -33,7 +32,7 @@
   [:div.Links
     [:p  {:on-click #(go-back current-view)}
        "Go Back"]
-    [:h2 @current-page]
+    [:h1 @current-page]
     [:input {:type "text"
              :value @new-link
              :on-change #(reset! new-link (-> % .-target .-value))}]
@@ -41,4 +40,5 @@
       {:on-click #(add-link current-page)}
       "Add New Link"]
     (for [link (get-links current-page)]
-        [:p ^{:key item} link])])
+        [:div.links-wrapper
+          [:p ^{:key item} link]])])

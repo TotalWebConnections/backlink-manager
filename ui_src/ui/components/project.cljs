@@ -45,19 +45,18 @@
   [:div.Project
     [:p  {:on-click #(go-back current-view)}
        "Go Back"]
+    (for [item @projects]
+        (if (= (:title item) @current-project)
+          (do ^{:key (:title item)}
+              [:h3  "Project: "(:title item)])))
     [:input {:type "text"
              :value @new-page
              :on-change #(reset! new-page (-> % .-target .-value))}]
     [:button
       {:on-click #(add-page @projects current-project)}
       "Add New Project"]
-    (for [item @projects]
-        (if (= (:title item) @current-project)
-          (do ^{:key (:title item)}
-              [:h3  "Project: "(:title item)])))
     (for [item (get-current-pages current-project)]
-        (do
-          [:div
-            ^{:key item}
-            [:p {:on-click #(change-view current-view item current-project current-page)}
-              item " - Link Count: " (get-page-link-count item)]]))])
+      [:div.page-wrapper {:on-click #(change-view current-view item current-project current-page)}
+        ^{:key item}
+          [:p item]
+          [:p "Link Count: " (get-page-link-count item)]])])

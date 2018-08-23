@@ -5,11 +5,8 @@
             [ui.core.components.project :as project]
             [ui.utilities.storage :as storage :refer [storage]]
             [ui.core.components.links :as links]
-
             [cljs.nodejs :as node]
             [clojure.string :as string :refer [split-lines]]))
-
-(def join-lines (partial string/join "\n"))
 
 (enable-console-print!)
 
@@ -17,16 +14,11 @@
   :dashboard-view-active true
   :project-view-active false
   :links-view-active false}))
-
 (defonce current-project (atom ""))
 (defonce current-page (atom ""))
 
 (defonce projects (atom
   (js->clj (.parse js/JSON (.get storage "projects")) :keywordize-keys true)))
-    ; (.get storage "projects")))
-
-; (.log js/console @links-view-active)
-
 
 (defn root-component []
   [:div.mainWrapper

@@ -1,7 +1,8 @@
 (ns ui.core.components.dashboard
   (:require [cljs.nodejs :as node]
     [ui.utilities.storage :as storage :refer [storage]]
-            [reagent.core :as reagent :refer [atom]]))
+    [ui.utilities.project :as project-utils]
+    [reagent.core :as reagent :refer [atom]]))
 
 
 (defonce new-project (atom ""))
@@ -24,14 +25,15 @@
 
 (defn render [projects current-view current-project]
   [:div.Dashboard
-  [:p "Dashboard Text"]
-  (for [item @projects]
-     ^{:key (:title item)}
-      [:p  {:on-click #(change-view current-view (:title item) current-project)}
-           (:title item)])
-  [:input {:type "text"
-           :value @new-project
-           :on-change #(reset! new-project (-> % .-target .-value))}]
-  [:button
-      {:on-click #(add-project projects)}
-      "Add New Project"]])
+    [:h1 "Dashboard"]
+    [:input {:type "text"
+             :value @new-project
+             :on-change #(reset! new-project (-> % .-target .-value))}]
+    [:button
+        {:on-click #(add-project projects)}
+        "Add New Project"]
+    (for [item @projects]
+      ^{:key (:title item)}
+      [:div.project-wrapper {:on-click #(change-view current-view (:title item) current-project)}
+        [:p (:title item)]
+        [:p "Pages: "(project-utils/get-project-page-count (:title item))]])])
