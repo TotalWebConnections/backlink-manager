@@ -7,6 +7,7 @@
 (defonce new-project (atom ""))
 
 (defn change-view [current-view title current-project]
+  "Goes to the project view"
   (reset! current-view {
     :dashboard-view-active false
     :project-view-active true
@@ -14,7 +15,7 @@
   (reset! current-project title))
 
 (defn add-project [projects]
-  ;~/Library/App
+  "Adds a new project to the store - saved at: ~/Library/App"
   (let [current-projects (into [] @projects)]
     ; (.log js/console (.stringify js/JSON (current-projects)))
   (.set storage "projects" (.stringify js/JSON (clj->js (conj current-projects {:title @new-project}))))

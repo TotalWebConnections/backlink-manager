@@ -7,6 +7,7 @@
 (defonce new-link (atom ""))
 
 (defn add-link [current-page]
+  "Adds a new link to the current page"
   (let [current-links (.get storage @current-page)]
   (.log js/console current-links)
   (if (not= (count current-links) 0)
@@ -14,6 +15,7 @@
     (.set storage @current-page (.stringify js/JSON (clj->js [@new-link]))))))
 
 (defn get-links [current-page]
+  "Gets all the links for the current page or returns an empty vector"
   (let [current-links (.get storage @current-page)]
     (if (not= (count current-links) 0)
     (clj->js (into [] (.parse js/JSON current-links)))
@@ -21,6 +23,7 @@
   ))
 
 (defn go-back [current-view]
+  "Goes back to the project view"
   (reset! current-view {
     :dashboard-view-active false
     :project-view-active true
