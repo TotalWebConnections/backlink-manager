@@ -23,6 +23,7 @@
   :links-view-active false}))
 
 (defonce current-project (atom ""))
+(defonce current-page (atom ""))
 
 (defonce projects (atom
   (js->clj (.parse js/JSON (.get storage "projects")) :keywordize-keys true)))
@@ -38,9 +39,9 @@
     (if (:dashboard-view-active @current-view)
       (dashboard/render projects current-view current-project))
     (if (:project-view-active @current-view)
-      (project/render projects current-project))
+      (project/render projects current-view current-project current-page))
     (if (:links-view-active @current-view)
-      (links/render))]])
+      (links/render projects current-view current-page))]])
 
 (reagent/render
   [root-component]

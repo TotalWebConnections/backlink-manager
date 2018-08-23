@@ -10,9 +10,6 @@
 
 (defonce new-page (atom ""))
 
-; (defonce project-pages (atom ))
-
-
 ; TODO keep this for possible us later depenig on how items are saved
 ; (defn add-page [projects current-project]
 ;   (let [projectReference
@@ -23,28 +20,48 @@
 ;     (.log js/console @current-project))
 ;   )
 
+(defn change-view [current-view item current-project current-page]
+  (reset! current-view {
+    :dashboard-view-active false
+    :project-view-active false
+    :links-view-active true})
+    (reset! current-page item))
+
+(defn go-back [current-view]
+  (reset! current-view {
+    :dashboard-view-active true
+    :project-view-active false
+    :links-view-active false}))
+
 (defn add-page [projects current-project]
-  ; (.log js/console (js->clj (.parse js/JSON (.get storage @current-project)) :keywordize-keys true))
-    (let [current-pages (js->clj (.parse js/JSON (.get storage @current-project)) :keywordize-keys true)]
-    (.set storage @current-project (.stringify js/JSON (clj->js (conj current-pages @new-page))))
-    )
-    ; (.set storage @current-project (.stringify js/JSON (clj->js [@new-page]))))
-    )
-      ; (.stringify js/JSON (clj->js (conj current-projects {:title @new-project}))))
-(defn render [projects current-project]
+    (let [current-pages (.get storage @current-project)]
+    (if (not= (count current-pages) 0)
+      (.set storage @current-project (.stringify js/JSON (clj->js (conj (into [] (.parse js/JSON current-pages)) @new-page))))
+      (.set storage @current-project (.stringify js/JSON (clj->js [@new-page]))))))
+
+(defn get-current-pages [current-project]
+  (let [current-pages (.get storage @current-project)]
+    (if (not= (count current-pages) 0)
+    (do (js->clj (.parse js/JSON current-pages)))
+    [])
+  ))
+
+(defn render [projects current-view current-project current-page]
   [:div.Project
-  [:input {:type "text"
-           :value @new-page
-           :on-change #(reset! new-page (-> % .-target .-value))}]
-  [:button
-    {:on-click #(add-page @projects current-project)}
-    "Add New Project"]
-  (for [item @projects]
-      (if (= (:title item) @current-project)
-        (do ^{:key (:title item)}
-            [:h3  "Project: "(:title item)])))
-            (.log js/console (js->clj (.parse js/JSON (.get storage @current-project)) ))
-  (for [item (js->clj (.parse js/JSON (.get storage @current-project)) :keywordize-keys true)]
-      ^{:key item}
-      [:p item])
-            ])
+    [:p  {:on-click #(go-back current-view)}
+       "Go Back"]
+    [:input {:type "text"
+             :value @new-page
+             :on-change #(reset! new-page (-> % .-target .-value))}]
+    [:button
+      {:on-click #(add-page @projects current-project)}
+      "Add New Project"]
+    (for [item @projects]
+        (if (= (:title item) @current-project)
+          (do ^{:key (:title item)}
+              [:h3  "Project: "(:title item)])))
+              ; (.log js/console (js->clj (.parse js/JSON (.get storage @current-project)) ))
+    (for [item (get-current-pages current-project)]
+        ^{:key item}
+        [:p {:on-click #(change-view current-view item current-project current-page)} item])])
+; (js->clj (.parse js/JSON (.get storage @current-project)
