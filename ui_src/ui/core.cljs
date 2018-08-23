@@ -3,17 +3,13 @@
             [ui.core.components.sidebar :as sidebar]
             [ui.core.components.dashboard :as dashboard]
             [ui.core.components.project :as project]
+            [ui.utilities.storage :as storage :refer [storage]]
             [ui.core.components.links :as links]
+
             [cljs.nodejs :as node]
             [clojure.string :as string :refer [split-lines]]))
 
 (def join-lines (partial string/join "\n"))
-
-(def Store
-  (node/require "electron-store"))
-
-(def storage (new Store))
-
 
 (enable-console-print!)
 

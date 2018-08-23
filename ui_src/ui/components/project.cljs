@@ -1,24 +1,9 @@
 (ns ui.core.components.project
   (:require [cljs.nodejs :as node]
+    [ui.utilities.storage :as storage :refer [storage]]
             [reagent.core :as reagent :refer [atom]]))
 
-; TODO remove this
-(def Store
-  (node/require "electron-store"))
-
-(def storage (new Store))
-
 (defonce new-page (atom ""))
-
-; TODO keep this for possible us later depenig on how items are saved
-; (defn add-page [projects current-project]
-;   (let [projectReference
-;           (filter (fn [project]
-;            (= (:title project) @current-project)) projects)]
-;     (.log js/console (assoc (into {} projectReference) :pages [@new-page]))
-;     (.set storage "stuff" (.stringify js/JSON (clj->js (assoc (into {} projectReference) :pages [@new-page]))))
-;     (.log js/console @current-project))
-;   )
 
 (defn change-view [current-view item current-project current-page]
   (reset! current-view {
@@ -43,8 +28,13 @@
   (let [current-pages (.get storage @current-project)]
     (if (not= (count current-pages) 0)
     (do (js->clj (.parse js/JSON current-pages)))
-    [])
-  ))
+    [])))
+
+(defn get-page-link-count [item]
+  (let [current-links (.get storage item)]
+    (if (not= (count current-links) 0)
+    (count (clj->js (into [] (.parse js/JSON current-links))))
+    "0")))
 
 (defn render [projects current-view current-project current-page]
   [:div.Project
@@ -60,8 +50,9 @@
         (if (= (:title item) @current-project)
           (do ^{:key (:title item)}
               [:h3  "Project: "(:title item)])))
-              ; (.log js/console (js->clj (.parse js/JSON (.get storage @current-project)) ))
     (for [item (get-current-pages current-project)]
-        ^{:key item}
-        [:p {:on-click #(change-view current-view item current-project current-page)} item])])
-; (js->clj (.parse js/JSON (.get storage @current-project)
+        (do
+          [:div
+            ^{:key item}
+            [:p {:on-click #(change-view current-view item current-project current-page)}
+              item " - Link Count: " (get-page-link-count item)]]))])

@@ -1,13 +1,8 @@
 (ns ui.core.components.dashboard
   (:require [cljs.nodejs :as node]
+    [ui.utilities.storage :as storage :refer [storage]]
             [reagent.core :as reagent :refer [atom]]))
 
-
-; TODO remove this
-(def Store
-  (node/require "electron-store"))
-
-(def storage (new Store))
 
 (defonce new-project (atom ""))
 
