@@ -54,7 +54,7 @@
              :on-change #(reset! new-page (-> % .-target .-value))}]
     [:button
       {:on-click #(add-page @projects current-project)}
-      "Add New Project"]
+      "Add New Page"]
     (for [item (get-current-pages current-project)]
       [:div.page-wrapper {:on-click #(change-view current-view item current-project current-page)}
         ^{:key item}

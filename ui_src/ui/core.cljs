@@ -17,6 +17,12 @@
 (defonce current-project (atom ""))
 (defonce current-page (atom ""))
 
+(let [current-projects (.get storage "projects")]
+(if (not= (count current-projects) 0)
+  (defonce projects (atom (js->clj (.parse js/JSON current-projects) :keywordize-keys true)))
+  (defonce projects (atom ""))))
+
+
 (defonce projects (atom
   (js->clj (.parse js/JSON (.get storage "projects")) :keywordize-keys true)))
 
