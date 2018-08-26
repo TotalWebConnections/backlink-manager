@@ -1,13 +1,26 @@
 body, html {
   margin: 0;
   padding: 0;
+  font-family: 'Open Sans Condensed', sans-serif;
+  font-size: 16px;
 }
 
 .mainWrapper {
     display: flex;
 }
+
+.bodyWrapper {
+  padding: 15px;
+}
+
+.bodyWrapper h1:first-child {
+  margin-top: 0px;
+}
+
 .Sidebar {
- width: 100px;
+ width: 150px;
+ background: #f7f9fc;
+ height: 100vh;
 }
 
 
@@ -16,4 +29,46 @@ body, html {
   border-bottom: 1px solid #444;
   display: flex;
   justify-content: space-between;
+}
+
+.options-holder  {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+}
+
+
+input {
+  padding: 5px;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  outline: 0;
+  background: #fff;
+  font-family: inherit;
+  border: none;
+  border: 1px solid #e6edf4;
+  color: #7e899b;
+  margin: 0 5px;
+  width: 125px;
+}
+
+button {
+  border: none;
+  background: #fff;
+  font-weight: 400;
+  color: inherit;
+  line-height: 1;
+  height: 29px;
+  font-family: inherit;
+  cursor: pointer;
+  border: 1px solid #e6edf4;
+  min-width: 100px;
+  margin: 0 5px;
+  transition: all .5s;
+}
+
+button:hover {
+  background: #e6edf4;
 }

@@ -25,7 +25,7 @@
 
 (defn render [projects current-view current-project]
   [:div.Dashboard
-    [:h1 "Dashboard"]
+    [:h1 "PROJECTS"]
     [:input {:type "text"
              :value @new-project
              :on-change #(reset! new-project (-> % .-target .-value))}]
@@ -36,4 +36,5 @@
       ^{:key (:title item)}
       [:div.project-wrapper {:on-click #(change-view current-view (:title item) current-project)}
         [:p (:title item)]
-        [:p "Pages: "(project-utils/get-project-page-count (:title item))]])])
+        [:p "Pages: "(project-utils/get-project-page-count (:title item))]
+        [:div.options-holder [:i.fas.fa-ellipsis-v]]])])
