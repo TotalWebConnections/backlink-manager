@@ -1,4 +1,4 @@
-(ns ui.core.components.sidebar)
+(ns ui.components.sidebar)
 
 
 (defn render []

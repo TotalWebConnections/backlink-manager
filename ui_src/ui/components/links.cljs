@@ -1,4 +1,4 @@
-(ns ui.core.components.links
+(ns ui.components.links
   (:require [cljs.nodejs :as node]
             [ui.utilities.storage :as storage :refer [storage]]
             [reagent.core :as reagent :refer [atom]]))

@@ -1,10 +1,10 @@
 (ns ui.core
   (:require [reagent.core :as reagent :refer [atom]]
-            [ui.core.components.sidebar :as sidebar]
-            [ui.core.components.dashboard :as dashboard]
-            [ui.core.components.project :as project]
+            [ui.components.sidebar :as sidebar]
+            [ui.components.dashboard :as dashboard]
+            [ui.components.project :as project]
             [ui.utilities.storage :as storage :refer [storage]]
-            [ui.core.components.links :as links]
+            [ui.components.links :as links]
             [cljs.nodejs :as node]
             [clojure.string :as string :refer [split-lines]]))
 

@@ -1,4 +1,4 @@
-(ns ui.core.components.dashboard
+(ns ui.components.dashboard
   (:require [cljs.nodejs :as node]
     [ui.utilities.storage :as storage :refer [storage]]
     [ui.utilities.project :as project-utils]
