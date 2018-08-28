@@ -21,7 +21,8 @@
     ; (.log js/console (.stringify js/JSON (current-projects)))
   (.set storage "projects" (.stringify js/JSON (clj->js (conj current-projects {:title @new-project}))))
   (reset! projects @new-project)
-  (reset! new-project "")))
+  (reset! new-project ""))
+  (project-utils/get-all-projects projects))
 
 (defn render [projects current-view current-project]
   [:div.Dashboard

@@ -23,8 +23,8 @@
   (defonce projects (atom ""))))
 
 
-(defonce projects (atom
-  (js->clj (.parse js/JSON (.get storage "projects")) :keywordize-keys true)))
+; (defonce projects (atom
+;   (js->clj (.parse js/JSON (.get storage "projects")) :keywordize-keys true)))
 
 (defn root-component []
   [:div.mainWrapper

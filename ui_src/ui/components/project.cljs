@@ -20,15 +20,19 @@
     :project-view-active false
     :links-view-active false}))
 
-(defn add-page [projects current-project]
+(defn add-page [projects current-project current-view]
     "Adds a new page to the current project"
     (let [current-pages (.get storage @current-project)]
     (if (not= (count current-pages) 0)
       (.set storage @current-project (.stringify js/JSON (clj->js (conj (into [] (.parse js/JSON current-pages)) @new-page))))
-      (.set storage @current-project (.stringify js/JSON (clj->js [@new-page]))))))
+      (.set storage @current-project (.stringify js/JSON (clj->js [@new-page])))))
+      (reset! current-view {
+        :dashboard-view-active false
+        :project-view-active true
+        :links-view-active false}))  ; THis is dirty, but forces the re-render so we'll leave it for now
 
 (defn get-current-pages [current-project]
-  "Gets all the pages associated with a project"
+  "Gets all the pages associated with a project or returns an empty vector"
   (let [current-pages (.get storage @current-project)]
     (if (not= (count current-pages) 0)
     (do (js->clj (.parse js/JSON current-pages)))
@@ -53,7 +57,7 @@
              :value @new-page
              :on-change #(reset! new-page (-> % .-target .-value))}]
     [:button
-      {:on-click #(add-page @projects current-project)}
+      {:on-click #(add-page @projects current-project current-view)}
       "Add New Page"]
     (for [item (get-current-pages current-project)]
       [:div.page-wrapper {:on-click #(change-view current-view item current-project current-page)}
