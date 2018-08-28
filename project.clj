@@ -2,7 +2,7 @@
   :license {:name "The MIT License"
             :url "https://opensource.org/licenses/MIT"}
   :source-paths ["src"]
-  :description "A hello world application for electron"
+  :description "A desktop based backlink manager"
   :dependencies [[org.clojure/clojure "1.9.0"]
                  [org.clojure/clojurescript "1.10.238"]
                  [figwheel "0.5.15"]
