@@ -28,7 +28,7 @@
 
 (defn root-component []
   [:div.mainWrapper
-   (sidebar/render)
+   (sidebar/render projects current-view current-project)
    [:div.bodyWrapper
     (if (:dashboard-view-active @current-view)
       (dashboard/render projects current-view current-project))

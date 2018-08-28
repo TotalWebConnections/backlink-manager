@@ -21,6 +21,19 @@ body, html {
  width: 150px;
  background: #f7f9fc;
  height: 100vh;
+ text-align: center;
+}
+
+.Sidebar p {
+  width: 100%;
+}
+
+.Sidebar .project-wrapper {
+  transition: all .5s;
+}
+
+.Sidebar .project-wrapper:hover {
+  background: #dfe3ea;
 }
 
 
