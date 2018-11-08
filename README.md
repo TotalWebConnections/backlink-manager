@@ -9,8 +9,14 @@ Helps to remember where links were built and check to ensure that the link remai
 
 
 ## To Do
+### Features
 -remove Links
 -specifiy Do/No-follow
 -record date of link
 -Specificy Text/Image links
 -Track anchor text
+
+###Tech
+-move view switcher to it's own function
+-Find Better way to update views on change
+-Organize atoms a bit better

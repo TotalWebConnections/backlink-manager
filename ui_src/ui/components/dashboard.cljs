@@ -18,7 +18,6 @@
 (defn add-project [projects]
   "Adds a new project to the store - saved at: ~/Library/App"
   (let [current-projects (into [] @projects)]
-    ; (.log js/console (.stringify js/JSON (current-projects)))
   (.set storage "projects" (.stringify js/JSON (clj->js (conj current-projects {:title @new-project}))))
   (reset! projects @new-project)
   (reset! new-project ""))

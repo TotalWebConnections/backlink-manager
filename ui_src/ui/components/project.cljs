@@ -29,7 +29,7 @@
       (reset! current-view {
         :dashboard-view-active false
         :project-view-active true
-        :links-view-active false}))  ; THis is dirty, but forces the re-render so we'll leave it for now
+        :links-view-active false}))  ; This is dirty, but forces the re-render so we'll leave it for now
 
 (defn get-current-pages [current-project]
   "Gets all the pages associated with a project or returns an empty vector"
